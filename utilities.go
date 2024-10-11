@@ -40,9 +40,6 @@ func ReadJWTTokenFromFile(filePath string) (*string, error) {
 	token = string(tokenBytes)
 	token = string(tokenBytes)
 
-	// Output the token for debugging (don't do this in production)
-	log.Println("JWT token successfully read from file")
-
 	if len(token) < 10 {
 		return nil, fmt.Errorf("invalid JWT token format!")
 	}
