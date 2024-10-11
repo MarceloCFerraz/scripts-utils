@@ -52,6 +52,13 @@ func SplitInBatches[T any](list *[]T, batchSize int) (*[][]T, error) {
 		batchSize = 100
 	}
 
+	log.Printf(
+		"Splitting list of %d items into %d batches of %d items (max) each\n",
+		len(*list),
+		len(*list)/batchSize,
+		batchSize,
+	)
+
 	var batches [][]T
 	var batch []T
 
