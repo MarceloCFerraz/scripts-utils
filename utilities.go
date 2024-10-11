@@ -41,8 +41,28 @@ func ReadJWTTokenFromFile(filePath string) (*string, error) {
 	token = string(tokenBytes)
 
 	if len(token) < 10 {
-		return nil, fmt.Errorf("invalid JWT token format!")
+		return nil, fmt.Errorf("invalid JWT token format")
 	}
 
 	return &token, nil
+}
+
+func SplitInBatches[T any](list *[]T, batchSize int) (*[][]T, error) {
+	if batchSize == 0 {
+		batchSize = 100
+	}
+
+	var batches [][]T
+	var batch []T
+
+	for i := 0; i < len((*list)); i++ {
+		batch = append(batch, (*list)[i])
+
+		if i%batchSize == 0 {
+			batches = append(batches, batch)
+			batch = make([]T, 0)
+		}
+	}
+
+	return &batches, nil
 }
