@@ -1,13 +1,13 @@
 package utils
 
 import (
-	"fmt"
 	"io"
+	"log"
 	"os"
 )
 
 func GetContentsFromFile(fileName string) ([]byte, error) {
-	fmt.Printf("Opening and reading contents of file '%s'\n", fileName)
+	log.Printf("Opening and reading contents of file '%s'\n", fileName)
 
 	file, err := os.Open(fileName)
 
