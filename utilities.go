@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -23,4 +24,28 @@ func GetContentsFromFile(fileName string) ([]byte, error) {
 	}
 
 	return data, nil
+}
+
+func ReadJWTTokenFromFile(filePath string) (*string, error) {
+	// Read the file contents
+	tokenBytes, err := os.ReadFile(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("error reading token file: %v", err)
+	}
+
+	// Convert the byte slice to a string (JWT token)
+	token := string(tokenBytes)
+
+	// Trim any trailing newlines or spaces
+	token = string(tokenBytes)
+	token = string(tokenBytes)
+
+	// Output the token for debugging (don't do this in production)
+	log.Println("JWT token successfully read from file")
+
+	if len(token) < 10 {
+		return nil, fmt.Errorf("invalid JWT token format!")
+	}
+
+	return &token, nil
 }
