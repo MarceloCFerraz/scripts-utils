@@ -75,7 +75,7 @@ func SplitInBatches[T any](list *[]T, batchSize int) (*[][]T, error) {
 	return &batches, nil
 }
 
-func SaveGECsToFile[T any](name string, data *[]T) error {
+func SaveDataToFile[T any](name string, data *[]T) error {
 	jsondata, err := json.Marshal(data)
 
 	if err != nil {
