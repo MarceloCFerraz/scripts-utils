@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -75,14 +74,9 @@ func SplitInBatches[T any](list *[]T, batchSize int) (*[][]T, error) {
 	return &batches, nil
 }
 
-func SaveDataToFile[T any](name string, data *[]T) error {
-	jsondata, err := json.Marshal(data)
 
-	if err != nil {
-		return err
-	}
-
-	fileName := fmt.Sprintf("%s.json", name)
+func SaveDataToFile(name, extension string, data []byte) error {
+	fileName := fmt.Sprintf("%s%s", name, extension)
 	log.Printf("Trying to create file '%s'", fileName)
 
 	file, err := os.Create(fileName)
@@ -93,7 +87,7 @@ func SaveDataToFile[T any](name string, data *[]T) error {
 	defer file.Close()
 
 	log.Printf("Trying to write data to file '%s'", fileName)
-	_, err = file.Write(jsondata)
+	_, err = file.Write(data)
 
 	if err != nil {
 		return err
