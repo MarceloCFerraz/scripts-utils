@@ -30,7 +30,7 @@ func ReadJWTTokenFromFile(filePath string) (*string, error) {
 	// Read the file contents
 	tokenBytes, err := os.ReadFile(filePath)
 	if err != nil {
-		return nil, fmt.Errorf("error reading token file: %v", err)
+		return nil, fmt.Errorf("error reading token file: %v\n", err)
 	}
 
 	// Convert the byte slice to a string (JWT token)
@@ -77,7 +77,7 @@ func SplitInBatches[T any](list *[]T, batchSize int) (*[][]T, error) {
 
 func SaveDataToFile(name, extension string, data []byte) error {
 	fileName := fmt.Sprintf("%s%s", name, extension)
-	log.Printf("Trying to create file '%s'", fileName)
+	log.Printf("Trying to create file '%s'\n", fileName)
 
 	file, err := os.Create(fileName)
 
@@ -86,7 +86,7 @@ func SaveDataToFile(name, extension string, data []byte) error {
 	}
 	defer file.Close()
 
-	log.Printf("Trying to write data to file '%s'", fileName)
+	log.Printf("Trying to write data to file '%s'\n", fileName)
 	_, err = file.Write(data)
 
 	if err != nil {
