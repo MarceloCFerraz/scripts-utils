@@ -65,11 +65,15 @@ func SplitInBatches[T any](list *[]T, batchSize int) (*[][]T, error) {
 	for i := 0; i < len((*list)); i++ {
 		batch = append(batch, (*list)[i])
 
-		if i%batchSize == 0 {
+		if i != 0 && (i+1)%batchSize == 0 {
 			batches = append(batches, batch)
 			batch = make([]T, 0)
 		}
 	}
+
+  if len(batch) > 0{
+    batches = append(batches, batch)
+  }
 
 	return &batches, nil
 }
