@@ -48,32 +48,25 @@ func ReadJWTTokenFromFile(filePath string) (*string, error) {
 }
 
 func SplitInBatches[T any](list *[]T, batchSize int) (*[][]T, error) {
-	if batchSize == 0 {
+	if batchSize <= 0 {
 		batchSize = 100
 	}
 
 	log.Printf(
-		"Splitting list of %d items into %d batches of %d items (max) each\n",
+		"Splitting list of %d items into batches of %d items (max) each\n",
 		len(*list),
-		len(*list)/batchSize,
 		batchSize,
 	)
 
 	var batches [][]T
-	var batch []T
 
-	for i := 0; i < len((*list)); i++ {
-		batch = append(batch, (*list)[i])
-
-		if i != 0 && (i+1)%batchSize == 0 {
-			batches = append(batches, batch)
-			batch = make([]T, 0)
+	for i := 0; i < len(*list); i += batchSize {
+		end := i + batchSize
+		if end > len(*list) {
+			end = len(*list)
 		}
+		batches = append(batches, (*list)[i:end])
 	}
-
-  if len(batch) > 0{
-    batches = append(batches, batch)
-  }
 
 	return &batches, nil
 }
